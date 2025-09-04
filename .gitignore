@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 target/
 pom.xml.tag
 pom.xml.releaseBackup
@@ -16,6 +16,6 @@ buildNumber.properties
 .project
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
-=======
+
 /.metadata/
->>>>>>> 46a8641 (Primer commit)
+

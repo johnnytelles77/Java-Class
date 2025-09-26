@@ -3,7 +3,8 @@ package com.coderhouse.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 import jakarta.persistence.*;
 
@@ -20,43 +21,49 @@ public class Categoria {
     private String nombre;
 
     @OneToMany(mappedBy = "categoria", fetch = FetchType.EAGER)
-    @JsonManagedReference
+    @JsonIgnore
     private List<Producto> productos = new ArrayList<>();
+    
 
     public Categoria() {
+    	super();
     }
 
     public Categoria(String nombre) {
+    	this();
         this.nombre = nombre;
     }
 
-    // Getters y Setters
-    public Long getId() {
-        return id;
-    }
+    // Getters y setters
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public String getNombre() {
-        return nombre;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+	public String getNombre() {
+		return nombre;
+	}
 
-    public List<Producto> getProductos() {
-        return productos;
-    }
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
-    public void setProductos(List<Producto> productos) {
-        this.productos = productos;
-    }
+	public List<Producto> getProductos() {
+		return productos;
+	}
 
-    @Override
-    public String toString() {
-        return "Categoria [id=" + id + ", nombre=" + nombre + "]";
-    }
+	public void setProductos(List<Producto> productos) {
+		this.productos = productos;
+	}
+
+	@Override
+	public String toString() {
+		return "Categoria [id=" + id + ", nombre=" + nombre + "]";
+	}
+
+
 }

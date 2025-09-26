@@ -1,79 +1,56 @@
 package com.coderhouse.models;
 
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.annotations.CreationTimestamp;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-@Table(name = "clientes")
+@Table(name = "Clientes")
 public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
-    @Column(name = "nombre", nullable = false)
     private String nombre;
-
-    @Column(name = "email")
     private String email;
-
-    @Column(name = "telefono", unique = true, nullable = false)
     private String telefono;
-
-    // Lado propietario de la relación ManyToMany con Producto
-    @ManyToMany
-    @JoinTable(
-        name = "producto_cliente",
-        joinColumns = @JoinColumn(name = "cliente_id"),
-        inverseJoinColumns = @JoinColumn(name = "producto_id")
-    )
-    @JsonIgnore
+    @ManyToMany(mappedBy = "clientes", fetch = FetchType.EAGER)
+    @JsonBackReference
     private List<Producto> productos = new ArrayList<>();
 
+    private LocalDateTime createdAt = LocalDateTime.now();
 
-    @CreationTimestamp
-    @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt;
+    public Cliente() {
+    }
 
-    public Cliente() {}
-
-    public Cliente(String nombre, String email, String telefono) {
+    public Cliente(Long id, String nombre, String email, String telefono) {
+        this.id = id;
         this.nombre = nombre;
         this.email = email;
         this.telefono = telefono;
     }
 
-    // Getters y setters
-    public Long getIdCliente() { return id; }
-    public void setIdCliente(Long idCliente) { this.id = idCliente; }
-
+    // Getters y Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
-
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
-
     public String getTelefono() { return telefono; }
     public void setTelefono(String telefono) { this.telefono = telefono; }
-
     public List<Producto> getProductos() { return productos; }
     public void setProductos(List<Producto> productos) { this.productos = productos; }
-
     public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 
     @Override
     public String toString() {
-        return "Cliente [idCliente=" + id + ", nombre=" + nombre +
-               ", telefono=" + telefono + "]";
+        return "Cliente [id=" + id + ", nombre=" + nombre + ", email=" + email + ", telefono=" + telefono
+                + ", createdAt=" + createdAt + "]";
     }
 }
-
